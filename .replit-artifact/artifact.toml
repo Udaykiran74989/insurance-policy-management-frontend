@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "SecureLife Insurance"
+description = "A polished demo insurance website with a public marketing experience, JWT-authenticated customer portal, and responsive admin portal connected to the Insurance Policy Management API."
+version = "1.0.0"
+id = "artifacts/securelife-insurance"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24087
+
+[services.development]
+run = "pnpm --filter @workspace/securelife-insurance run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/securelife-insurance", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/securelife-insurance/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24087"
+BASE_PATH = "/"
